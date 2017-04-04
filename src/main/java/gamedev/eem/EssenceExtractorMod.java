@@ -1,5 +1,7 @@
 package gamedev.eem;
 
+import gamedev.eem.block.ModBlocks;
+import gamedev.eem.item.ModItems;
 import gamedev.eem.proxy.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -21,6 +23,8 @@ public class EssenceExtractorMod {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
 		
+		ModItems.init();
+		ModBlocks.init();
 	}
 	
 	@EventHandler
