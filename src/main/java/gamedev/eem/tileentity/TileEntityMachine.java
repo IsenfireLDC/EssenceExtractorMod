@@ -133,6 +133,7 @@ public class TileEntityMachine extends TileEntityLockable implements ITickable, 
             this.cookTime = 0;
             this.markDirty();
         }*/
+        this.markDirty();
 	}
 
 	@Override
@@ -192,7 +193,7 @@ public class TileEntityMachine extends TileEntityLockable implements ITickable, 
 		return this.machineCustomName != null && !this.machineCustomName.isEmpty();
 	}
 
-	@Override
+	@Override //TODO Make Container
 	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
 		return null;
 	}
@@ -210,18 +211,28 @@ public class TileEntityMachine extends TileEntityLockable implements ITickable, 
 				this.machineRuntime = getItemRuntime(name);
 				if (this.machineRuntime != 0 && (this.machineItemStacks.get(0).getCount() >= getItemQuantity(name))) {
 					this.currentRuntime = 0;
+					this.currentPoweredTime = this.startingPoweredTime;
 					this.isRunning = true;
 				}
-			} else {
-				if (this.machineRuntime <= this.currentRuntime) {
-					//this.machineItemStacks.add(2, null); //TODO fix and add methods
-					processItem();
-					this.isRunning = canRun();
-				} else {
-					currentRuntime++;
+			} else { //TODO Look over this
+				if (canRun()) {
+					if (this.machineRuntime <= this.currentRuntime) {
+						processItem();
+					} else {
+						currentRuntime++;
+					}
 				}
 			}
-			currentPoweredTime--;
+			this.currentPoweredTime--;
+			this.isRunning = canRun();
+			if (this.currentPoweredTime <= 0) {
+				if (!((ItemStack)this.machineItemStacks.get(1)).isEmpty()) {
+					this.machineItemStacks.get(1).shrink(1);
+					this.currentPoweredTime = this.startingPoweredTime;
+				} else {
+					this.isRunning = false;
+				}
+			}
 		}
 	}
 	
@@ -233,7 +244,6 @@ public class TileEntityMachine extends TileEntityLockable implements ITickable, 
 	 */
 	private enum itemRuntime {
 		//TODO Balance quantities and runtimes
-		//TODO Add essence items
 		//Essence of Poison
 		POISON1(defaultRuntime, "item.potatoPoisonous.name", null), //poisonous potato
 		POISON2(defaultRuntime, "item.spiderEye.name", 2, null), //spider eye
@@ -361,7 +371,7 @@ public class TileEntityMachine extends TileEntityLockable implements ITickable, 
 		ItemStack itemResult = getItemResult(this.machineItemStacks.get(0).getUnlocalizedName());
 		if (this.machineItemStacks.get(0).isEmpty()) {
 			return false;
-		} else if (getItemResult(this.machineItemStacks.get(0).getUnlocalizedName()) == null) {
+		} else if (itemResult == null) {
 			return false;
 		} else {
 			ItemStack itemstack = (ItemStack)this.machineItemStacks.get(2);
@@ -372,7 +382,7 @@ public class TileEntityMachine extends TileEntityLockable implements ITickable, 
 		}
 	}
 	
-	private void processItem() { //use <slot>.grow()
+	private void processItem() {
 		ItemStack itemstack = (ItemStack)this.machineItemStacks.get(2);
 		ItemStack itemstack1 = (ItemStack)this.machineItemStacks.get(0);
 		if (canRun()) {
