@@ -358,7 +358,7 @@ public class TileEntityMachine extends TileEntityLockable implements ITickable, 
 	 * @param id - The unlocalized name of the item
 	 * @return The ItemStack created after processing
 	 */
-	private ItemStack getItemResult(String id) {
+	public static ItemStack getItemResult(String id) {
 		for (itemRuntime run : itemRuntime.values()) {
 			if (id.equals(run.getId())) {
 				return run.getResult();
