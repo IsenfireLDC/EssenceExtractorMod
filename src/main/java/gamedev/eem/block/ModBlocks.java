@@ -6,8 +6,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
 	
+	private static BlockMachine blockMachine;
+	
 	public static void init() {
-		
+		blockMachine = register(new BlockMachine());
 	}
 	
 	private static <T extends Block> T register(T block, ItemBlock itemBlock) {

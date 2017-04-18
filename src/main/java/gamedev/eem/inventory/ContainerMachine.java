@@ -1,5 +1,6 @@
 package gamedev.eem.inventory;
 
+import gamedev.eem.item.crafting.MachineRecipes;
 import gamedev.eem.tileentity.TileEntityMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -122,8 +123,7 @@ public class ContainerMachine extends Container {
             }
             else if (index != 1 && index != 0)
             {
-            	int x = 10; //Remove when fixing
-                if (x == 6) //TODO Recipe class
+                if (!MachineRecipes.instance().getProcessingResult(itemstack1).isEmpty())
                 {
                     if (!this.mergeItemStack(itemstack1, 0, 1, false))
                     {
