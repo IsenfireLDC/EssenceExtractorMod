@@ -1,5 +1,6 @@
 package gamedev.eem.gui;
 
+import gamedev.eem.Reference;
 import gamedev.eem.inventory.ContainerMachine;
 import gamedev.eem.tileentity.TileEntityMachine;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -13,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiMachine extends GuiContainer
 {
-    private static final ResourceLocation MACHINE_GUI_TEXTURES = new ResourceLocation("eem:textures/gui/block_machine");
+    private static final ResourceLocation MACHINE_GUI_TEXTURES = new ResourceLocation(Reference.MODID, "textures/gui/block_machine.png");
     /** The player inventory bound to this GUI. */
     private final InventoryPlayer playerInventory;
     private final IInventory tileMachine;
