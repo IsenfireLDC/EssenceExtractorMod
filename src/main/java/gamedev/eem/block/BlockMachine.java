@@ -61,7 +61,7 @@ public class BlockMachine extends BlockContainer {
 
             if (tileentity instanceof TileEntityMachine)
             {
-                playerIn.displayGUIChest((TileEntityMachine)tileentity);
+                playerIn.displayGUIChest((TileEntityMachine)tileentity); //TODO ERROR Error caused here
                 playerIn.addStat(StatList.FURNACE_INTERACTION);
             }
 
